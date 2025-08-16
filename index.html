@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Alignment: Inter-Layer Cross-Attention for Symbolic Music Translation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* --- STYLE FOR AUDIO PLAYBARS --- */
+        /* Default state: Grey. Applied to all audio players. */
+        audio {
+            filter: invert(75%) grayscale(100%);
+            opacity: 0.6;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        /* Valid state: Black. Applied by JavaScript when an audio file loads successfully. */
+        audio.audio-valid {
+            filter: none;
+            opacity: 1.0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-slate-900">Function Alignment</h1>
+            <div class="space-x-4 md:space-x-6 text-sm font-medium">
+                <a href="#abstract" class="text-slate-600 hover:text-sky-600 transition-colors">Abstract</a>
+                <a href="#architecture" class="text-slate-600 hover:text-sky-600 transition-colors">Architecture</a>
+                <a href="#examples" class="text-slate-600 hover:text-sky-600 transition-colors">Examples</a>
+                <a href="#" class="bg-sky-500 text-white px-3 py-1.5 rounded-md hover:bg-sky-600 transition-colors">Paper (Link)</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-6 md:p-10 max-w-5xl">
+
+        <section class="text-center my-12 md:my-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">Function Alignment: Inter-Layer Cross-Attention for Symbolic Music Translation</h2>
+            <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
+              Xiaoyu Qian, Collaborator Name<br>
+              <span class="text-base">MBZUAI</span>
+            </p>
+        </section>
+
+        <section id="abstract" class="mb-20">
+            <h3 class="text-3xl font-bold text-slate-900 mb-4">Abstract</h3>
+            <div class="prose prose-lg max-w-none text-slate-800 leading-relaxed">
+                <p>This work introduces Shoelace, a novel architecture for high-fidelity conversion between symbolic music formats. By connecting two specialized, pre-trained MIDI language models (one for scores, one for performances) with a layer-wise cross-attention adapter, our model learns to translate the nuances between a written score and an expressive human performance. The adapter acts as a "shoelace," tying the hidden states of the two models together at every layer, enabling a deep and contextual information transfer. These examples showcase the model's ability to generate clean, readable scores from expressive performances.</p>
+            </div>
+        </section>
+
+        <section id="architecture" class="mb-20">
+            <h3 class="text-3xl font-bold text-slate-900 mb-6">Model Architecture</h3>
+            <div class="bg-white p-4 rounded-xl shadow-lg border border-slate-200">
+                <img src="assets/Adapter.png" alt="Shoelace Model Architecture Diagram" class="rounded-lg w-full">
+                <p class="text-center mt-4 text-slate-600 italic">The Shoelace adapter injects the Key (K) and Value (V) from a conditioning model (LM for x) into the cross-attention block of the target model (LM for y) at each layer.</p>
+            </div>
+        </section>
+
+        <section id="examples" class="mb-20">
+            <h3 class="text-3xl font-bold text-slate-900 mb-6">Audio Examples</h3>
+            <p class="text-lg mb-8 text-slate-800">Listen to examples of the model converting expressive MIDI performances into clean, quantized scores. We provide generated results with different sampling settings (`top_k`) to show the effect on musical diversity.</p>
+            
+            <div class="space-y-12">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <h4 class="text-xl font-semibold mb-6 text-slate-900">Sample 1: Classical Piano Piece</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-center mb-6">
+                        <div>
+                            <h5 class="font-medium mb-2">Input Performance (Human)</h5>
+                            <audio controls class="w-full"><source src="assets/audio/001_001_Performance.mp3" type="audio/mpeg"></audio>
+                        </div>
+                        <div>
+                            <h5 class="font-medium mb-2">Ground Truth Score</h5>
+                            <audio controls class="w-full"><source src="assets/audio/001_001_Score.mp3" type="audio/mpeg"></audio>
+                        </div>
+                    </div>
+                    <hr class="my-6">
+                    <h5 class="font-semibold text-center mb-4 text-slate-800">Generated Outputs (different `top_k`)</h5>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <h6 class="font-medium mb-2 text-sky-700">Generated (top_k = 1)</h6>
+                            <audio controls class="w-full"><source src="assets/audio/001_001_perf2score_topk=1.mp3" type="audio/mpeg"></audio>
+                        </div>
+                        <div>
+                            <h6 class="font-medium mb-2 text-sky-700">Generated (top_k = 2)</h6>
+                            <audio controls class="w-full"><source src="assets/audio/001_001_perf2score_topk=2.mp3" type="audio/mpeg"></audio>
+                        </div>
+                        <div>
+                            <h6 class="font-medium mb-2 text-sky-700">Generated (top_k = 4)</h6>
+                            <audio controls class="w-full"><source src="assets/audio/001_001_perf2score_topk=4.mp3" type="audio/mpeg"></audio>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <h4 class="text-xl font-semibold mb-6 text-slate-900">Sample 2: Jazz Trio Piece</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-center mb-6">
+                        <div><h5 class="font-medium mb-2">Input Performance (Human)</h5><audio controls class="w-full"><source src="assets/audio/jazz_input.mp3" type="audio/mpeg"></audio></div>
+                        <div><h5 class="font-medium mb-2">Ground Truth Score</h5><audio controls class="w-full"><source src="assets/audio/jazz_truth.mp3" type="audio/mpeg"></audio></div>
+                    </div>
+                    <hr class="my-6">
+                    <h5 class="font-semibold text-center mb-4 text-slate-800">Generated Outputs (different `top_k`)</h5>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div><h6 class="font-medium mb-2 text-sky-700">Generated (top_k = 1)</h6><audio controls class="w-full"><source src="assets/audio/jazz_generated_topk1.mp3" type="audio/mpeg"></audio></div>
+                        <div><h6 class="font-medium mb-2 text-sky-700">Generated (top_k = 2)</h6><audio controls class="w-full"><source src="assets/audio/jazz_generated_topk2.mp3" type="audio/mpeg"></audio></div>
+                        <div><h6 class="font-medium mb-2 text-sky-700">Generated (top_k = 4)</h6><audio controls class="w-full"><source src="assets/audio/jazz_generated_topk4.mp3" type="audio/mpeg"></audio></div>
+                    </div>
+                </div>
+                </div>
+        </section>
+
+        <!-- <section id="citation" class="mb-12">
+             <h3 class="text-3xl font-bold text-slate-900 mb-6">Citation</h3>
+             <div class="bg-slate-200 text-slate-800 font-mono text-sm p-6 rounded-lg overflow-x-auto">
+                <pre><code>@inproceedings{qian2025function,
+  title     = {Function Alignment: Inter-Layer Cross-Attention for Symbolic Music Translation},
+  author    = {Xiaoyu Qian and Collaborator Name},
+  booktitle = {Proceedings of the International Society for Music Information Retrieval Conference (ISMIR)},
+  year      = {2025}
+}</code></pre>
+             </div>
+        </section> -->
+
+    </main>
+
+    <footer class="text-center py-8 border-t border-slate-200 bg-white">
+        <p class="text-slate-500">Function Alignment Project - MBZUAI - 2025</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('audio').forEach(audioPlayer => {
+                // This event fires when the browser can play the audio file through to the end
+                // without stopping for buffering. It's a reliable indicator that the src is valid.
+                audioPlayer.addEventListener('canplaythrough', () => {
+                    audioPlayer.classList.add('audio-valid');
+                });
+                
+                // Optional: Handle cases where the audio file is explicitly invalid or not found.
+                // This removes the 'audio-valid' class if it was somehow added before an error.
+                audioPlayer.addEventListener('error', () => {
+                    audioPlayer.classList.remove('audio-valid');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
