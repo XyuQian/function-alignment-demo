@@ -31,11 +31,11 @@ HTML_TEMPLATE = """
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center mb-6">
         <div>
             <h5 class="font-medium mb-2">Input Performance</h5>
-            <audio controls class="w-full"><source src="{input_path}" type="audio/wav"></audio>
+            <audio controls class="w-full"><source src="{input_path}" type="audio/mp3"></audio>
         </div>
         <div>
             <h5 class="font-medium mb-2">Ground Truth Score</h5>
-            <audio controls class="w-full"><source src="{truth_path}" type="audio/wav"></audio>
+            <audio controls class="w-full"><source src="{truth_path}" type="audio/mp3"></audio>
         </div>
     </div>
     <hr class="my-6">
@@ -45,9 +45,9 @@ HTML_TEMPLATE = """
         <button data-target="base2-{sample_id}" class="tab-button font-medium text-slate-800 py-2 px-4 rounded-t-lg">Baseline 2 (MIDI2Score)</button>
     </div>
     <div class="text-center">
-        <div id="ours-{sample_id}" class="tab-content"><audio controls class="w-full mx-auto max-w-md"><source src="{ours_path}" type="audio/wav"></audio></div>
-        <div id="base1-{sample_id}" class="tab-content hidden"><audio controls class="w-full mx-auto max-w-md"><source src="{base1_path}" type="audio/wav"></audio></div>
-        <div id="base2-{sample_id}" class="tab-content hidden"><audio controls class="w-full mx-auto max-w-md"><source src="{base2_path}" type="audio/wav"></audio></div>
+        <div id="ours-{sample_id}" class="tab-content"><audio controls class="w-full mx-auto max-w-md"><source src="{ours_path}" type="audio/mp3"></audio></div>
+        <div id="base1-{sample_id}" class="tab-content hidden"><audio controls class="w-full mx-auto max-w-md"><source src="{base1_path}" type="audio/mp3"></audio></div>
+        <div id="base2-{sample_id}" class="tab-content hidden"><audio controls class="w-full mx-auto max-w-md"><source src="{base2_path}" type="audio/mp3"></audio></div>
     </div>
 </div>
 """
@@ -55,7 +55,7 @@ HTML_TEMPLATE = """
 def generate_html():
     """Finds all audio files and generates the examples.html content."""
     
-    input_files = sorted(glob.glob(os.path.join(AUDIO_BASE_DIR, INPUT_DIR, "*.wav")))
+    input_files = sorted(glob.glob(os.path.join(AUDIO_BASE_DIR, INPUT_DIR, "*.mp3")))
     
     if not input_files:
         print(f"Error: No input files found in '{os.path.join(AUDIO_BASE_DIR, INPUT_DIR)}'. Please check your file structure.")
@@ -77,11 +77,11 @@ def generate_html():
             "sample_name": base_name,
             "sample_title": sample_title,
             "sample_id": i + 1,
-            "input_path": os.path.join(AUDIO_BASE_DIR, INPUT_DIR, f"{base_name}{FILENAME_SUFFIXES['input']}.wav"),
-            "ours_path": os.path.join(AUDIO_BASE_DIR, OURS_DIR, f"{base_name}{FILENAME_SUFFIXES['ours']}.wav"),
-            "base1_path": os.path.join(AUDIO_BASE_DIR, BASELINE1_DIR, f"{base_name}{FILENAME_SUFFIXES['base1']}.wav"),
-            "base2_path": os.path.join(AUDIO_BASE_DIR, BASELINE2_DIR, f"{base_name}{FILENAME_SUFFIXES['base2']}.wav"),
-            "truth_path": os.path.join(AUDIO_BASE_DIR, GROUND_TRUTH_DIR, f"{base_name}{FILENAME_SUFFIXES['truth']}.wav"),
+            "input_path": os.path.join(AUDIO_BASE_DIR, INPUT_DIR, f"{base_name}{FILENAME_SUFFIXES['input']}.mp3"),
+            "ours_path": os.path.join(AUDIO_BASE_DIR, OURS_DIR, f"{base_name}{FILENAME_SUFFIXES['ours']}.mp3"),
+            "base1_path": os.path.join(AUDIO_BASE_DIR, BASELINE1_DIR, f"{base_name}{FILENAME_SUFFIXES['base1']}.mp3"),
+            "base2_path": os.path.join(AUDIO_BASE_DIR, BASELINE2_DIR, f"{base_name}{FILENAME_SUFFIXES['base2']}.mp3"),
+            "truth_path": os.path.join(AUDIO_BASE_DIR, GROUND_TRUTH_DIR, f"{base_name}{FILENAME_SUFFIXES['truth']}.mp3"),
         }
         
         # Check if all files exist for this sample before adding it
